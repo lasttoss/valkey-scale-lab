@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go vet ./...
+      - run: go test ./... -count=1
+      # The two gates that make the others believable: every mutation below is a plausible mistake,
+      # and each one has to make the suite red.
+      - name: the gate bites (mutations must be caught)
+        run: make mutate
+  chart:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+      - run: ./scripts/chart-check.sh

@@ -1,0 +1,3 @@
+internal/hotpath/hotpath.go	\treturn addr + "|" + itoa(db)	\t\treturn addr // MUTANT: the database dropped from the cache key	the database dropped from the shared client's cache key
+internal/latency/latency.go	\tidx := int(float64(len(samples)) * p)	\tidx := 0 // MUTANT: every percentile is the median	every percentile collapses to the median
+internal/valkeyinfo/info.go	\t\t\tout.ConnectedClients = atoi(value)	\t\t\tout.MaxClients = atoi(value) // MUTANT: the field is read into the wrong name	connected_clients read into MaxClients

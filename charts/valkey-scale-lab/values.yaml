@@ -1,0 +1,43 @@
+# Every value here is something a reader can change without reading the templates, and none of them
+# is a secret. maxClients is a value on purpose: the incident is not "the limit was too low", it is
+# "the client count was a function of the match count", and the chart should let you see both.
+image:
+  repository: valkey-scale-lab
+  tag: dev
+  pullPolicy: IfNotPresent
+
+mode: fixed # fixed | leak
+
+valkey:
+  image: valkey/valkey:8-alpine
+  maxClients: 500
+  service:
+    port: 6379
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: "1"
+      memory: 256Mi
+
+# The lab as a Job: it runs the workload, reads the server's own INFO, and exits non-zero when the
+# numbers do not have the shape the incident had. backoffLimit 0 because a gate that retries until
+# it passes cannot fail a release.
+lab:
+  enabled: true
+  matches: 600
+  pool: 16
+  backoffLimit: 0
+  activeDeadlineSeconds: 300
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 500m
+      memory: 128Mi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

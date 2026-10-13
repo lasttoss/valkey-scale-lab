@@ -1,0 +1,8 @@
+The lab ran as a Job with mode={{ .Values.mode }} against a Valkey that allows {{ .Values.valkey.maxClients }} clients.
+
+Read the numbers it printed:
+
+  kubectl logs job/{{ include "valkey-scale-lab.fullname" . }}-lab
+
+mode=leak is expected to fail the gate: it opens one connection per match, which is the incident.
+mode=fixed is expected to pass, with the connection count staying near {{ .Values.lab.pool }}.

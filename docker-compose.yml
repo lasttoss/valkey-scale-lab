@@ -1,0 +1,21 @@
+# One service, on purpose. The lab is about connections to a single server: a database that is not
+# in any measurement would be a container that costs a minute of every run and teaches nothing. The
+# SQL half of the same problem is measured in the repositories that use a database for real
+# (liveops-console, nakama-migration-kit).
+#
+# maxclients is 500 rather than the default 10000 so that the incident fits in one run: the fix is
+# not "raise the limit", and a lab that needs ten thousand sockets to show the wall would be a lab
+# nobody runs locally.
+services:
+  valkey:
+    image: valkey/valkey:8-alpine
+    command: ["valkey-server", "--maxclients", "500", "--save", "", "--appendonly", "no"]
+    ports:
+      # 6479 on the host, because a developer machine usually already has a Redis on 6379 and this
+      # lab binds sockets on purpose: sharing a port with someone else's database is not a test.
+      - "6479:6379"
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 1s
+      timeout: 2s
+      retries: 30

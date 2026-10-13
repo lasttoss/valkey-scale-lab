@@ -1,0 +1,39 @@
+{{- if .Values.lab.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  # The release name is in the name, so a gate cannot run against the previous revision's server.
+  name: {{ include "valkey-scale-lab.fullname" . }}-lab
+  labels:
+    {{- include "valkey-scale-lab.labels" . | nindent 4 }}
+spec:
+  backoffLimit: {{ .Values.lab.backoffLimit }}
+  activeDeadlineSeconds: {{ .Values.lab.activeDeadlineSeconds }}
+  template:
+    metadata:
+      labels:
+        {{- include "valkey-scale-lab.labels" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: lab
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - -mode={{ .Values.mode }}
+            - -addr={{ include "valkey-scale-lab.fullname" . }}-valkey:{{ .Values.valkey.service.port }}
+            - -matches={{ .Values.lab.matches }}
+            - -pool={{ .Values.lab.pool }}
+          resources:
+            {{- toYaml .Values.lab.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+{{- end }}
