@@ -1,6 +1,6 @@
 # valkey-scale-lab
 
-The same 600 matches, 500 connections or 7.
+The same 600 matches: 500 connections, or a single-digit pool.
 
 A Redis (Valkey) client created inside a match handler looks like a local variable. It is a
 connection pool, and a pod running ten thousand matches has ten thousand pools - which is how a real

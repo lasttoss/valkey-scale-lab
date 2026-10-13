@@ -235,7 +235,7 @@ page = f"""{meta}
 <body>
 <div class="frame">
   <p class="eyebrow">valkey-scale-lab · connections, pools and the walk</p>
-  <h1>The same 600 matches, 500 connections or 7</h1>
+  <h1>The same 600 matches: 500 connections, or a single-digit pool</h1>
   <div class="diagram-container">
 {"".join(svg)}
   </div>
