@@ -21,6 +21,12 @@ column ends with 103 matches that never got a connection. The right column is on
 [`docs/figures/valkey-scale-lab-flow.generator.py`](docs/figures/valkey-scale-lab-flow.generator.py)
 from the numbers in `docs/measurements.md`.
 
+## The incident and the fix, running
+
+![Two runs against the same Valkey: the first creates a client per match and ends at the server's 500-connection ceiling with a hundred matches refused, the second uses one pooled client for the same 600 matches and reports single-digit connections](docs/demo.gif)
+
+*Two of the five runs behind `make measure`, against a real Valkey with `--maxclients 500`. The output is the command's; the pauses between lines are the recording's.*
+
 ## What this demonstrates
 
 - **A connection incident, reproduced and measured.** `mode=leak` opens one client per live match;
