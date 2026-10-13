@@ -64,10 +64,10 @@ that matter:
 
 | mode | matches | connections on the server | clients in this process | errors |
 |---|---|---|---|---|
-| leak | 300 | 303 | 300 | 0 |
-| leak | 600 | 500 (ceiling) | 600 | 103 |
-| fixed | 300 | 4 | 1 | 0 |
-| fixed | 600 | 7 | 1 | 0 |
+| leak | 300 | ~303 (the match count) | 300 | 0 |
+| leak | 600 | 500 (the ceiling) | 600 | ~100 |
+| fixed | 300 | single digit | 1 | 0 |
+| fixed | 600 | single digit | 1 | 0 |
 
 ## What this is not
 
