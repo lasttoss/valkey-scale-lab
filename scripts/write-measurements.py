@@ -50,10 +50,11 @@ def main() -> int:
     body = [HEAD]
     # The order is the argument's order, written down here, because the incident has a narrative:
     # the leak, the wall, the fix, and then the other half of the same incident.
-    order = ["lab-leak300.md", "lab-leak600.md", "lab-fixed600.md", "lab-keys.md", "lab-scan.md"]
+    order = ["lab-leak300.md", "lab-leak600.md", "lab-fixed300.md", "lab-fixed600.md", "lab-keys.md", "lab-scan.md"]
     titles = {
         "lab-leak300.md": "### 300 live matches, a client per match",
         "lab-leak600.md": "### 600 live matches, a client per match (past the ceiling)",
+        "lab-fixed300.md": "### 300 live matches, one pooled client",
         "lab-fixed600.md": "### 600 live matches, one pooled client",
         "lab-keys.md": "### `KEYS` over 200,000 keys, 20 walks",
         "lab-scan.md": "### `SCAN` over the same 200,000 keys, 20 walks",

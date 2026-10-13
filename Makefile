@@ -19,11 +19,12 @@ down: ## stop it
 measure: up ## reproduce the incident and write docs/measurements.md
 	@go run ./cmd/lab -mode leak  -matches 300 -out /tmp/lab-leak300.md
 	@go run ./cmd/lab -mode leak  -matches 600 -out /tmp/lab-leak600.md || true
+	@go run ./cmd/lab -mode fixed -matches 300 -pool 16 -out /tmp/lab-fixed300.md
 	@go run ./cmd/lab -mode fixed -matches 600 -pool 16 -out /tmp/lab-fixed600.md
 	@go run ./cmd/lab -mode fixed -matches 50 -keys 200000 -sweeps 20 -walk keys -out /tmp/lab-keys.md
 	@go run ./cmd/lab -mode fixed -matches 50 -keys 200000 -sweeps 20 -walk scan -out /tmp/lab-scan.md
 	@python3 scripts/write-measurements.py \
-	  /tmp/lab-leak300.md /tmp/lab-leak600.md /tmp/lab-fixed600.md /tmp/lab-keys.md /tmp/lab-scan.md \
+	  /tmp/lab-leak300.md /tmp/lab-leak600.md /tmp/lab-fixed300.md /tmp/lab-fixed600.md /tmp/lab-keys.md /tmp/lab-scan.md \
 	  > docs/measurements.md
 	@echo "docs/measurements.md regenerated"
 

@@ -66,6 +66,7 @@ that matter:
 |---|---|---|---|---|
 | leak | 300 | 303 | 300 | 0 |
 | leak | 600 | 500 (ceiling) | 600 | 103 |
+| fixed | 300 | 4 | 1 | 0 |
 | fixed | 600 | 7 | 1 | 0 |
 
 ## What this is not
