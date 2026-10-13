@@ -20,13 +20,13 @@ is not its own duration - it is the worst round trip everybody else saw while it
 
 | mode | matches | connections on the server | clients in this process | errors | p50 | p99 | p99.9 | max |
 |---|---|---|---|---|---|---|---|---|
-| leak | 300 | 304 | 300 | 0 | 40µs | 164µs | 462µs | 989µs |
+| leak | 300 | 304 | 300 | 0 | 36µs | 157µs | 769µs | 12.269ms |
 
 ### 600 live matches, a client per match (past the ceiling)
 
 | mode | matches | connections on the server | clients in this process | errors | p50 | p99 | p99.9 | max |
 |---|---|---|---|---|---|---|---|---|
-| leak | 600 | 500 | 600 | 103 | 27µs | 55µs | 240µs | 7.308ms |
+| leak | 600 | 500 | 600 | 103 | 29µs | 58µs | 255µs | 6.864ms |
 
 server's words for the refused connections: `EOF`
 
@@ -34,29 +34,29 @@ server's words for the refused connections: `EOF`
 
 | mode | matches | connections on the server | clients in this process | errors | p50 | p99 | p99.9 | max |
 |---|---|---|---|---|---|---|---|---|
-| fixed | 300 | 6 | 1 | 0 | 28µs | 53µs | 126µs | 126µs |
+| fixed | 300 | 6 | 1 | 0 | 27µs | 66µs | 141µs | 141µs |
 
 ### 600 live matches, one pooled client
 
 | mode | matches | connections on the server | clients in this process | errors | p50 | p99 | p99.9 | max |
 |---|---|---|---|---|---|---|---|---|
-| fixed | 600 | 6 | 1 | 0 | 28µs | 66µs | 121µs | 444µs |
+| fixed | 600 | 6 | 1 | 0 | 30µs | 119µs | 574µs | 588µs |
 
 ### `KEYS` over 200,000 keys, 20 walks
 
 | mode | matches | connections on the server | clients in this process | errors | p50 | p99 | p99.9 | max |
 |---|---|---|---|---|---|---|---|---|
-| fixed | 50 | 6 | 1 | 0 | 29µs | 154µs | 15.9ms | 18.416ms |
+| fixed | 50 | 6 | 1 | 0 | 27µs | 112µs | 15.886ms | 20.733ms |
 
-keys: 20 sweeps over 200600 keys in 581ms, 304.7 ms of that inside the server (cmdstat_keys), and the worst round trip any other client saw was 18.42ms
+keys: 20 sweeps over 200600 keys in 510ms, 268.3 ms of that inside the server (cmdstat_keys), and the worst round trip any other client saw was 20.73ms
 
 ### `SCAN` over the same 200,000 keys, 20 walks
 
 | mode | matches | connections on the server | clients in this process | errors | p50 | p99 | p99.9 | max |
 |---|---|---|---|---|---|---|---|---|
-| fixed | 50 | 6 | 1 | 0 | 254µs | 690µs | 1.691ms | 3.779ms |
+| fixed | 50 | 7 | 1 | 0 | 240µs | 902µs | 3.408ms | 7.002ms |
 
-scan: 20 sweeps over 200600 keys in 1.277s, with cmdstat_keys unchanged (the server never ran KEYS), and the worst round trip any other client saw was 3.78ms
+scan: 20 sweeps over 200600 keys in 1.44s, with cmdstat_keys unchanged (the server never ran KEYS), and the worst round trip any other client saw was 7ms
 
 
 ## What the numbers do not say
