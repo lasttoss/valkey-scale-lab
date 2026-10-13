@@ -90,8 +90,8 @@ HANDLER = Block("the match handler", "one function, two versions of it", [
 ])
 
 LEAK = Block("what it was", "redis.NewClient inside the match", [
-    ("300 matches:  3 -> 303", True),
-    ("600 matches:  3 -> 500 (ceiling)", True),
+    ("300 matches -> ~303 connections", True),
+    ("600 matches -> 500 (the ceiling)", True),
     ("clients in this process     600", True),
     ("103 matches refused", True),
     ("server's words to the client:", False),
@@ -103,9 +103,12 @@ LEAK = Block("what it was", "redis.NewClient inside the match", [
 ], tint="#fbf1ef")
 
 FIX = Block("what it is now", "one client, cached by addr+db", [
-    ("300 matches:  3 -> 4", True),
-    ("600 matches:  3 -> 7", True),
-    ("clients in this process       1", True),
+    ("connections stay in single digits", True),
+    ("clients in this process            1", True),
+    ("the count does not follow the", False),
+    ("match count - which is the claim;", False),
+    ("the per-run numbers are in", False),
+    ("docs/measurements.md", True),
     ("0 errors", True),
     ("PoolSize 16, MinIdleConns 2,", True),
     ("MaxActiveConns 16", True),
@@ -116,10 +119,10 @@ FIX = Block("what it is now", "one client, cached by addr+db", [
 ], tint=TINT)
 
 WALK = Block("the same incident, one call later", "walking the keyspace, 200,600 keys", [
-    ("KEYS  20 walks   571ms  cmdstat_keys 20", True),
-    ("SCAN  20 walks  1.371s  cmdstat_keys  0", True),
+    ("KEYS  20 walks  ~571ms  cmdstat_keys 20", True),
+    ("SCAN  20 walks  ~1.37s  cmdstat_keys  0", True),
     ("worst round trip another client saw:", False),
-    ("  KEYS 18.7ms      SCAN 3.8ms", True),
+    ("  KEYS ~18.7ms     SCAN ~3.8ms", True),
     ("SCAN is the slower tool and the", False),
     ("better one: it moves the cost out of", False),
     ("one blocking call, so the stall a", False),
