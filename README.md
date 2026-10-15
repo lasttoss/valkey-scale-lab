@@ -1,5 +1,7 @@
 # valkey-scale-lab
 
+[![ci](https://github.com/lasttoss/valkey-scale-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/lasttoss/valkey-scale-lab/actions/workflows/ci.yml)
+
 The same 600 matches: 500 connections, or a single-digit pool.
 
 A Redis (Valkey) client created inside a match handler looks like a local variable. It is a
