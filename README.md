@@ -23,6 +23,12 @@ column ends with 103 matches that never got a connection. The right column is on
 [`docs/figures/valkey-scale-lab-flow.generator.py`](docs/figures/valkey-scale-lab-flow.generator.py)
 from the numbers in `docs/measurements.md`.
 
+**Where to look first:** [`internal/hotpath/hotpath.go`](internal/hotpath/hotpath.go) holds the two ways a
+game server gets a connection, which is the incident itself, and
+[`internal/keywalk/keywalk.go`](internal/keywalk/keywalk.go) the two ways to ask for a set of keys.
+[`docs/production-notes.md`](docs/production-notes.md) reads the numbers for capacity planning; `make measure`
+regenerates them.
+
 ## The incident and the fix, running
 
 ![Two runs against the same Valkey: the first creates a client per match and ends at the server's 500-connection ceiling with a hundred matches refused, the second uses one pooled client for the same 600 matches and reports single-digit connections](docs/demo.gif)
